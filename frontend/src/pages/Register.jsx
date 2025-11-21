@@ -22,30 +22,34 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  e.preventDefault();
+  setError('');
+console.log('Form Data:', formData); 
+  if (formData.password !== formData.password_confirmation) {
+    setError('Passwords do not match');
+    return;
+  }
 
-    if (formData.password !== formData.password_confirmation) {
-      setError('Passwords do not match');
-      return;
-    }
+  setLoading(true);
 
-    setLoading(true);
-
-    try {
-      await register(
-        formData.name,
-        formData.email,
-        formData.password,
-        formData.password_confirmation
-      );
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    // Check what's being sent
+    console.log('Sending data:', formData);
+    
+    await register(
+      formData.name,
+      formData.email,
+      formData.password,
+      formData.password_confirmation  // Make sure this matches
+    );
+    navigate('/dashboard');
+  } catch (err) {
+    console.error('Registration error:', err.response?.data);  // Add this line
+    setError(err.response?.data?.message || 'Registration failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

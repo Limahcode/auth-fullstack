@@ -32,16 +32,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password, password_confirmation) => {
-    const response = await api.post('/register', {
-      name,
-      email,
-      password,
-      password_confirmation,
-    });
-    localStorage.setItem('token', response.data.token);
-    setUser(response.data.user);
-    return response.data;
-  };
+  console.log('Registering with:', { name, email, password, password_confirmation });
+  
+  const response = await api.post('/register', {
+    name,
+    email,
+    password,
+    password_confirmation,  // Must be exactly this name
+  });
+  localStorage.setItem('token', response.data.token);
+  setUser(response.data.user);
+  return response.data;
+};
 
   const logout = async () => {
     try {
