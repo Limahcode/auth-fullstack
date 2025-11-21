@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;  // Add this import
+use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\ResetPasswordNotification;  // Add this import
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;  // Add HasApiTokens here
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -43,5 +44,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Send the password reset notification with custom URL
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        // Use our custom notification instead of Laravel's default
+        $this->notify(new ResetPasswordNotification($token, $this->email));
     }
 }

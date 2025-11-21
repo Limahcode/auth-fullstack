@@ -55,7 +55,7 @@ php artisan migrate
 ```bash
 php artisan serve
 ```
-
+### For testing the Backend API
 ### Frontend Setup
 
 1. Navigate to frontend directory:
@@ -78,6 +78,7 @@ npm run dev
 - User Registration
 - User Login
 - User Logout
+- Forgot Pasword
 - Protected Routes
 - Dashboard
 - JWT Token Authentication
@@ -87,4 +88,5 @@ npm run dev
 - `POST /api/register` - Register new user
 - `POST /api/login` - Login user
 - `POST /api/logout` - Logout user (requires auth)
+- `POST /api/resetpassword'
 - `GET /api/user` - Get authenticated user (requires auth)
